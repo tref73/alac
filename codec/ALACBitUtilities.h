@@ -82,7 +82,11 @@ typedef struct BitBuffer
 	- these routines take a fixed size buffer and read/write to it
 	- bounds checking must be done by the client
 */
+#ifdef _WIN32
+__declspec(dllexport) void	BitBufferInit( BitBuffer * bits, uint8_t * buffer, uint32_t byteSize );
+#else
 void	BitBufferInit( BitBuffer * bits, uint8_t * buffer, uint32_t byteSize );
+#endif
 uint32_t	BitBufferRead( BitBuffer * bits, uint8_t numBits );   // note: cannot read more than 16 bits at a time
 uint8_t	BitBufferReadSmall( BitBuffer * bits, uint8_t numBits );
 uint8_t	BitBufferReadOne( BitBuffer * bits );

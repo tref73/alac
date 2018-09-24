@@ -1,8 +1,14 @@
 # libalac make
 
-CFLAGS = -g -O3 -c
+CFLAGS = -g -O3 -c -fPIC
 LFLAGS = -Wall
 CC = g++
+
+ARCH := $(shell uname -s)
+ifeq ($(ARCH),Darwin)
+CFLAGS += -arch i386 -arch x86_64
+LFLAGS += -arch i386 -arch x86_64
+endif
 
 SRCDIR = .
 OBJDIR = ./obj
@@ -42,6 +48,9 @@ dp_enc.o \
 matrix_dec.o \
 matrix_enc.o
 
+libalac.so: $(OBJS)
+	$(CC) -shared $(LFLAGS) -o libalac.so $(OBJS)
+
 libalac.a:	$(OBJS)
 	ar rcs libalac.a $(OBJS)
 
@@ -74,7 +83,7 @@ matrix_dec.o : matrix_dec.c
 
 matrix_enc.o : matrix_enc.c
 	$(CC) -I $(INCLUDES) $(CFLAGS) matrix_enc.c
-		
+
 clean:
-	-rm $(OBJS) libalac.a
+	rm -f $(OBJS) libalac.a libalac.so
 

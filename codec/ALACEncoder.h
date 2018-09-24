@@ -31,7 +31,11 @@
 
 struct BitBuffer;
 
+#ifdef _WIN32
+class __declspec(dllexport) ALACEncoder
+#else
 class ALACEncoder
+#endif
 {
 	public:
 		ALACEncoder();

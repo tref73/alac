@@ -35,7 +35,11 @@
 
 struct BitBuffer;
 
+#ifdef _WIN32
+class __declspec(dllexport) ALACDecoder
+#else
 class ALACDecoder
+#endif
 {
 	public:
 		ALACDecoder();
